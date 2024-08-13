@@ -53,7 +53,7 @@
 <meta property="og:description" content="recursion递归和递推递归  从问题的最终目标出发，逐渐将复杂问题化为简单问题，最终求得问题。是逆向的  递推  从简单问题出发，一步步的向前发展，最终求得问题。是正向的。  差别  递归中问题的n 要求是计算之前就知道。而递推可以在计算中确定，不要求计算前就知道n 。  从程序上看，递归表现为自己调用自己，递推则没有这样的形式。  一般来说，递推的效率高于递归（当然是递推可以计算的情况下）">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-08-06T07:40:47.000Z">
-<meta property="article:modified_time" content="2024-08-09T11:38:30.416Z">
+<meta property="article:modified_time" content="2024-08-13T09:06:33.044Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="algorithm">
 <meta name="twitter:card" content="summary_large_image">
@@ -164,7 +164,7 @@
 
     <aside class="post-side">
         <div class="post-side__toc">
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%92%E5%BD%92%E5%92%8C%E9%80%92%E6%8E%A8"><span class="toc-number">1.</span> <span class="toc-text">递归和递推</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%E9%A2%98%E8%AE%B2%E8%A7%A3"><span class="toc-number">1.1.</span> <span class="toc-text">例题讲解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%87%E6%B2%B3%E5%8D%92"><span class="toc-number">1.1.1.</span> <span class="toc-text">过河卒</span></a></li></ol></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%92%E5%BD%92%E5%92%8C%E9%80%92%E6%8E%A8"><span class="toc-number">1.</span> <span class="toc-text">递归和递推</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%E9%A2%98%E8%AE%B2%E8%A7%A3"><span class="toc-number">1.1.</span> <span class="toc-text">例题讲解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%8C%B4%E5%AD%90%E5%90%83%E6%A1%83"><span class="toc-number">1.1.1.</span> <span class="toc-text">猴子吃桃</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%87%E6%B2%B3%E5%8D%92"><span class="toc-number">1.1.2.</span> <span class="toc-text">过河卒</span></a></li></ol></li></ol></li></ol>
         </div>
     </aside>
     <a class="btn-toc button" id="btn-toc" tabindex="0">
@@ -174,7 +174,7 @@
     </a>
     <div class="toc-menus" id="toc-menus">
         <div class="toc-title">文章目录</div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%92%E5%BD%92%E5%92%8C%E9%80%92%E6%8E%A8"><span class="toc-number">1.</span> <span class="toc-text">递归和递推</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%E9%A2%98%E8%AE%B2%E8%A7%A3"><span class="toc-number">1.1.</span> <span class="toc-text">例题讲解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%87%E6%B2%B3%E5%8D%92"><span class="toc-number">1.1.1.</span> <span class="toc-text">过河卒</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%92%E5%BD%92%E5%92%8C%E9%80%92%E6%8E%A8"><span class="toc-number">1.</span> <span class="toc-text">递归和递推</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%E9%A2%98%E8%AE%B2%E8%A7%A3"><span class="toc-number">1.1.</span> <span class="toc-text">例题讲解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%8C%B4%E5%AD%90%E5%90%83%E6%A1%83"><span class="toc-number">1.1.1.</span> <span class="toc-text">猴子吃桃</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%87%E6%B2%B3%E5%8D%92"><span class="toc-number">1.1.2.</span> <span class="toc-text">过河卒</span></a></li></ol></li></ol></li></ol>
     </div>
 
 
@@ -201,7 +201,7 @@
 </li>
 </ul>
 <p><strong>一般用递归考虑问题，然后用非递归方式编写。</strong></p>
-<h3 id="例题讲解"><a href="#例题讲解" class="headerlink" title="例题讲解"></a>例题讲解</h3><p><a target="_blank" rel="noopener" href="https://oj.czos.cn/p/1082">原题链接</a></p>
+<h3 id="例题讲解"><a href="#例题讲解" class="headerlink" title="例题讲解"></a>例题讲解</h3><h4 id="猴子吃桃"><a href="#猴子吃桃" class="headerlink" title="猴子吃桃"></a>猴子吃桃</h4><p><a target="_blank" rel="noopener" href="https://oj.czos.cn/p/1082">原题链接</a></p>
 <p><strong>题目描述</strong></p>
 <blockquote>
 <p>猴子吃桃子问题：猴子第一天摘下若干个桃子，当即吃了一半还不过瘾，又多吃了一个；第二天又将剩下的桃子吃掉一半又多吃了一个；以后每天早上都吃了前一天剩下的一半零一个。到了第十天想再吃时，见只剩下一个桃子，求第一天共摘了多少个桃子？</p>
@@ -225,13 +225,27 @@
 
     </div>
      
-    <div class="post-footer__meta"><p>更新于 2024-08-09</p></div> 
+    <div class="post-footer__meta"><p>更新于 2024-08-13</p></div> 
     <div class="post-entry__tags"><a href="/tags/algorithm/" class="post-tags__link button"># algorithm</a></div> 
 </article>
 
 
     <div class="nav">
         <div class="nav__prev">
+            
+                <a href="/2024/08/13/%E8%B4%AA%E5%BF%83/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            上一篇
+                        </div>
+                        <div class="nav__title">
+                            贪心
+                        </div>
+                    </div>
+                </a>
             
         </div>
         <div class="nav__next">

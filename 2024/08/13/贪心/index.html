@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    
+        <link rel="shortcut icon" href="/images/duck.png">
+    
+    
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/duck.png">
+    
+    
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/duck.png">
+    
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/duck.png">
+    
+    
+        <link rel="mask-icon" href="/images/duck.png">
+    
+
+
+    <!-- meta -->
+
+
+<title>贪心 | Gwoo</title>
+
+
+    <meta name="keywords" content="algorithm">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="avarice贪心定义  在对问题求解时，总是做出在当前看来是最好的选择。也就是说不从整体最优上考虑，而是在某种意义上求局部最优解，每次局部都是最优解则得到整体最优解  注意  不是对所有问题都能得到最优解，关键是贪心策略的选择 贪心算法的前提：局部最优解一定能导致全局最优解，且每次选择不会影响后续的选择  贪心的过程 建立模型来描述问题；  把求解的问题分成若干个子问题；  对每一子问题求解，得">
+<meta property="og:type" content="article">
+<meta property="og:title" content="贪心">
+<meta property="og:url" content="http://example.com/2024/08/13/%E8%B4%AA%E5%BF%83/index.html">
+<meta property="og:site_name" content="Gwoo">
+<meta property="og:description" content="avarice贪心定义  在对问题求解时，总是做出在当前看来是最好的选择。也就是说不从整体最优上考虑，而是在某种意义上求局部最优解，每次局部都是最优解则得到整体最优解  注意  不是对所有问题都能得到最优解，关键是贪心策略的选择 贪心算法的前提：局部最优解一定能导致全局最优解，且每次选择不会影响后续的选择  贪心的过程 建立模型来描述问题；  把求解的问题分成若干个子问题；  对每一子问题求解，得">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-08-13T09:04:43.000Z">
+<meta property="article:modified_time" content="2024-08-13T09:05:20.106Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="algorithm">
+<meta name="twitter:card" content="summary_large_image">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/default.css" media="none" >
+        
+            <link rel="stylesheet" id="hl-dark-theme" href="/css/highlight/dark.css" media="none">
+        
+    
+
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/style/dark.css">
+
+    
+<script src="/js/darkmode.js"></script>
+
+
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+    <body>
+        <div id="app" tabindex="-1">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">孤鹜</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+            </div>
+        
+        
+        
+    <a href="/search/" id="btn-search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="32"><path d="M192 448c0-141.152 114.848-256 256-256s256 114.848 256 256-114.848 256-256 256-256-114.848-256-256z m710.624 409.376l-206.88-206.88A318.784 318.784 0 0 0 768 448c0-176.736-143.264-320-320-320S128 271.264 128 448s143.264 320 320 320a318.784 318.784 0 0 0 202.496-72.256l206.88 206.88 45.248-45.248z"></path></svg>
+    </a>
+
+
+        
+        
+    <a href="javaScript:void(0);" id="btn-toggle-dark">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    </a>
+
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        贪心
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2024/08/" class="post-meta__date button">2024-08-13</a>
+        
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+    <aside class="post-side">
+        <div class="post-side__toc">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B4%AA%E5%BF%83"><span class="toc-number">1.</span> <span class="toc-text">贪心</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B4%AA%E5%BF%83%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="toc-number">1.1.</span> <span class="toc-text">贪心的过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%E9%A2%98%E8%AE%B2%E8%A7%A3"><span class="toc-number">1.2.</span> <span class="toc-text">例题讲解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B4%BB%E5%8A%A8%E9%80%89%E6%8B%A9"><span class="toc-number">1.2.1.</span> <span class="toc-text">活动选择</span></a></li></ol></li></ol></li></ol>
+        </div>
+    </aside>
+    <a class="btn-toc button" id="btn-toc" tabindex="0">
+        <svg viewBox="0 0 1024 1024" width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M128 256h64V192H128zM320 256h576V192H320zM128 544h64v-64H128zM320 544h576v-64H320zM128 832h64v-64H128zM320 832h576v-64H320z" fill="currentColor"></path>
+        </svg>
+    </a>
+    <div class="toc-menus" id="toc-menus">
+        <div class="toc-title">文章目录</div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B4%AA%E5%BF%83"><span class="toc-number">1.</span> <span class="toc-text">贪心</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B4%AA%E5%BF%83%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="toc-number">1.1.</span> <span class="toc-text">贪心的过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%E9%A2%98%E8%AE%B2%E8%A7%A3"><span class="toc-number">1.2.</span> <span class="toc-text">例题讲解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B4%BB%E5%8A%A8%E9%80%89%E6%8B%A9"><span class="toc-number">1.2.1.</span> <span class="toc-text">活动选择</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+
+<article class="post post__with-toc content-card">
+    <div class="post__header"></div>
+    <div class="post__content">
+        <h1 id="avarice"><a href="#avarice" class="headerlink" title="avarice"></a>avarice</h1><h2 id="贪心"><a href="#贪心" class="headerlink" title="贪心"></a>贪心</h2><p><strong>定义</strong></p>
+<ul>
+<li>在对问题求解时，总是做出在当前看来是最好的选择。也就是说不从整体最优上考虑，而是在某种意义上求局部最优解，每次局部都是最优解则得到整体最优解</li>
+</ul>
+<p><strong>注意</strong></p>
+<ul>
+<li>不是对所有问题都能得到最优解，关键是贪心策略的选择</li>
+<li>贪心算法的前提：<strong>局部最优解一定能导致全局最优解，且每次选择不会影响后续的选择</strong></li>
+</ul>
+<h3 id="贪心的过程"><a href="#贪心的过程" class="headerlink" title="贪心的过程"></a>贪心的过程</h3><ul>
+<li><p>建立模型来描述问题；</p>
+</li>
+<li><p>把求解的问题分成若干个子问题；</p>
+</li>
+<li><p>对每一子问题求解，得到子问题的局部最优解；</p>
+</li>
+<li><p>把子问题的解局部最优解合成原来解问题的一个解；</p>
+</li>
+</ul>
+<h3 id="例题讲解"><a href="#例题讲解" class="headerlink" title="例题讲解"></a>例题讲解</h3><h4 id="活动选择"><a href="#活动选择" class="headerlink" title="活动选择"></a>活动选择</h4><p><a target="_blank" rel="noopener" href="https://oj.czos.cn/p/1372">原题链接</a></p>
+<p><strong>answer</strong></p>
+<p>贪心策略：优先选择结束时间最早的活动。这样可以为后续活动留出更多的时间。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建结构体</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Activity</span>&#123;</span><br><span class="line">    <span class="type">int</span> Start_Time;</span><br><span class="line">    <span class="type">int</span> Stop_Time;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 结构体排序比较函数</span></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">compare</span><span class="params">(Activity a1,Activity a2)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a1.Stop_Time&lt;a2.Stop_Time;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> n,ans=<span class="number">0</span>;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    <span class="comment">// 以vector容器存储活动时间</span></span><br><span class="line">    <span class="function">vector&lt;Activity&gt; <span class="title">activities</span><span class="params">(n)</span></span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i =<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">        cin&gt;&gt;activities[i].Start_Time&gt;&gt; activities[i].Stop_Time;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 对输入的时间根据结束时间进行排序</span></span><br><span class="line">    <span class="built_in">sort</span>(activities.<span class="built_in">begin</span>(),activities.<span class="built_in">end</span>(),compare);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 第一个必选</span></span><br><span class="line">    <span class="type">int</span> LastSelect = activities[<span class="number">0</span>].Stop_Time;</span><br><span class="line">    ans++;</span><br><span class="line">    <span class="comment">// 遍历每一个结束时间最早，开始时间大于结束时间的活动，并计数</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;n;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(LastSelect &lt;= activities[i].Start_Time)&#123;</span><br><span class="line">            LastSelect = activities[i].Stop_Time;</span><br><span class="line">            ans++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    cout&lt;&lt;ans&lt;&lt;endl;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+     
+    <div class="post-footer__meta"><p>更新于 2024-08-13</p></div> 
+    <div class="post-entry__tags"><a href="/tags/algorithm/" class="post-tags__link button"># algorithm</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2024/08/06/%E9%80%92%E5%BD%92%E5%92%8C%E9%80%92%E6%8E%A8/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            下一篇
+                        </div>
+                        <div class="nav__title">
+                            递归和递推
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+     
+    <a href="#" class="button" id="b2t" aria-label="回到顶部" title="回到顶部">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="32" height="32">
+            <path d="M233.376 722.752L278.624 768 512 534.624 745.376 768l45.248-45.248L512 444.128zM192 352h640V288H192z" fill="currentColor"></path>
+        </svg>
+    </a>
+
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2024 <a href="/">Gwoo</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>
